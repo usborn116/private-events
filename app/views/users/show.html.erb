@@ -14,6 +14,25 @@
         <% end %>
     </ul>
 
+  <h3>Attending Events: <%= current_user.attended_events.count %></h3>
+    <ul>
+        <% if current_user.attended_events.empty? %>
+          <p>User is not attending</p>
+        <% else %>
+          <p>Future Events</p>
+          <% current_user.attended_events.future.each do |event| %>
+            <li class="has-text-centered"><%=link_to event.name, event_path(event) %></li>
+            <li>Event Location:<%=event.location%></li>
+            <li>Event Date:<%=event.date%></li>
+          <% end %>
+          <p>Past Events</p>
+          <% current_user.attended_events.past.each do |event| %>
+            <li class="has-text-centered"><%=link_to event.name, event_path(event) %></li>
+            <li>Event Location:<%=event.location%></li>
+            <li>Event Date:<%=event.date%></li>
+          <% end %>
+        <% end %>
+    </ul>
+
     <div>
       <%= link_to "create new event", new_event_path %>
-      <%= link_to "show attended events", show_attended_events_path %>

@@ -11,6 +11,12 @@
     <div>You have already registered</div>
 <%end%>
 
+<% if current_user && current_user == @event.creator %>
+    <%= link_to "Edit Event", edit_event_path(@event.id) %>
+    <%= link_to "Delete Event", event_path(@event.id), method: :delete, data: { confirm: "Are you sure?"} %>
+<%end%>
+
+
 <h2>Event Attendees</h2>
 <% @event.attendees.each do |a| %>
     <%= a.name %>
