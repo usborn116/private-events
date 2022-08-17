@@ -1,0 +1,19 @@
+<h1>Event Details</h1>
+
+<p><% @event.name %></p>
+<p><% @event.date %></p>
+<p><% @event.location %></p>
+<p>Created By:<%=@event.creator.name%></p>
+
+<%if current_user && @event.creator != current_user && !@event.attendees.include?(current_user)%>
+    <%= button_to "Attend the event", create_attending_event_path(:user_id => current_user.id.to_i, :id => event.id.to_i), method: :post %>
+<%else%>
+    <div>You have already registered</div>
+<%end%>
+
+<h2>Event Attendees</h2>
+<% @event.attendees.each do |a| %>
+    <%= a.name %>
+<%end%>
+<br>
+<%= link_to "Go back", events_path %>
